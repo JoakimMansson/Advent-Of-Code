@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "chrono": "cpp",
+        "fstream": "cpp",
+        "*.tcc": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "string_view": "cpp",
+        "ostream": "cpp",
+        "iosfwd": "cpp",
+        "source_location": "cpp",
+        "functional": "cpp",
+        "iostream": "cpp",
+        "array": "cpp",
+        "any": "cpp",
+        "span": "cpp",
+        "regex": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}

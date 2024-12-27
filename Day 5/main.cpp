@@ -16,6 +16,13 @@ void print2DVector(vector<vector<string>> &vec) {
     }
 }
 
+void print1DVector(vector<string> &vec) {
+    for (const auto &element: vec) {
+        cout << element << " ";
+    }
+    cout << endl; // print new row
+}
+
 void printMap(map<string, vector<string>> &map) {
     for (const auto &vec: map) {
         cout << "Key: " << vec.first << endl;
@@ -58,6 +65,17 @@ vector<string> addUpdate(const string &update) {
     return result;
 }
 
+bool isSorted(map<string, vector<string>> &rulesMap, vector<string> &updatesVector) {
+    for(int col = 0; col < updatesVector.size(); col++) {
+        for(int i = col+1; i < updatesVector.size(); i++) {
+            if (elementisInVector(rulesMap[updatesVector[i]], updatesVector[col])) return false;
+        }
+    }
+    
+    
+    return true;
+}
+
 void partOne(map<string, vector<string>> &rulesMap, vector<vector<string>> &updatesVector) {
     int MiddlePageSum = 0;
     for (const auto &row: updatesVector) {
@@ -84,34 +102,30 @@ void partOne(map<string, vector<string>> &rulesMap, vector<vector<string>> &upda
 
     }
 
-    cout << "Middle Page Sum: " << MiddlePageSum << endl;
+    cout << "Middle Page Sum [P1]: " << MiddlePageSum << endl;
 }
 
+
 void partTwo(map<string, vector<string>> &rulesMap, vector<vector<string>> &updatesVector) {
-    int MiddlePageSum = 0;
+    int middlePageSum = 0;
     for (int row = 0; row < updatesVector.size(); row++) {
-        if (updatesVector[row].empty()) continue; // Skip if row is empty
-
-        vector<string> previousElements;
-        bool correctUpdate = true;
-        for (int col = 0; col < updatesVector[row].size(); col++) {
-            string element = updatesVector[row][col];
-            if(previousElements.empty()) previousElements.push_back(element);
-            else {
-
-                for (const auto &prevElement: previousElements) {
-                    if (elementisInVector(rulesMap[element], prevElement)) {
-                        // SWITCH ELEMENTS HERE
+        bool isNotCorrect = false;
+        while(!isSorted(rulesMap, updatesVector[row])) {
+            isNotCorrect = true;
+            for (int col = 0; col < updatesVector[row].size(); col++) {
+                for (int i = col+1; i < updatesVector[row].size(); i++) {
+                    if (elementisInVector(rulesMap[updatesVector[row][i]], updatesVector[row][col])) {
+                        swap(updatesVector[row][i], updatesVector[row][col]);
                     }
                 }
             }
         }
 
-        if (!correctUpdate) {
-            MiddlePageSum += stoi(row[(int)row.size() / 2]);
+        if (isNotCorrect) {
+            middlePageSum += stoi(updatesVector[row][(int)(updatesVector[row].size() / 2)]);
         }
     }
-    
+    cout << "Middle Page Sum [P2]: " << middlePageSum << endl;
 }
 
 int main() {
@@ -140,7 +154,7 @@ int main() {
 
 
     partOne(rulesMap, updatesVector);
-    partTwo(rulesMap, updatesVector)
+    partTwo(rulesMap, updatesVector);
 
     /* DEBUGGING
     printMap(rulesMap);
