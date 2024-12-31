@@ -19,8 +19,12 @@ void printVector(vector<string> input) {
 
 u_int64_t calculateChecksum(vector<string> diskmap) {
     u_int64_t sum = 0;
+    int id = 0;
     for(int i = 0; i < diskmap.size(); i++) {
-        if(diskmap[i] != ".") sum += (u_int64_t)stoi(diskmap[i])*i;
+        if(diskmap[i] != ".") {
+            sum += (u_int64_t)stoi(diskmap[i])*id;
+            id++;
+        }
     }
     return sum;
 }
