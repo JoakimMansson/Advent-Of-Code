@@ -78,7 +78,6 @@ int P2(node* trailHead) {
 
     int trailHeadScore = 0;
     Q.push(trailHead);
-    //visited[trailHead->index] = true;
 
     while(!Q.empty()) {
         node* v = Q.front();
@@ -122,7 +121,7 @@ int main() {
     vector<node*> trailHeads = getTrailheads(input, lineLength);
     int trailHeadScore = 0;
     int multiTrailHeadScore = 0;
-    for(const auto &trailHead: trailHeads) {
+    for(const auto &trailHead: trailHeads) { // BFS for part 1 and 2!
         trailHeadScore += P1(trailHead);
         multiTrailHeadScore += P2(trailHead);
     }
